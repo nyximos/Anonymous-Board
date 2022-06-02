@@ -12,4 +12,6 @@ public interface BoardService {
 
     ResponseEntity<MyResponse> get(Long id);
 
+    ResponseEntity<MyResponse> validate(Long id, String password);
+
 }
