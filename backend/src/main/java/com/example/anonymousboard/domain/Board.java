@@ -1,16 +1,17 @@
 package com.example.anonymousboard.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@Builder
 @DynamicUpdate
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 
@@ -28,6 +29,7 @@ public class Board {
     private String content;
 
     @Column(name = "board_created_at", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd`T`HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "views", nullable = false)
