@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface BoardService {
 
+    ResponseEntity<MyResponse> getAll();
+
     ResponseEntity<MyResponse> save(BoardFormDTO boardFormDTO);
 
 }
