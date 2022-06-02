@@ -1,10 +1,7 @@
 package com.example.anonymousboard.service;
 
 import com.example.anonymousboard.domain.Board;
-import com.example.anonymousboard.dto.BoardFormDTO;
-import com.example.anonymousboard.dto.BoardListViewDTO;
-import com.example.anonymousboard.dto.MyResponse;
-import com.example.anonymousboard.dto.StatusEnum;
+import com.example.anonymousboard.dto.*;
 import com.example.anonymousboard.repository.BoardQueryRepository;
 import com.example.anonymousboard.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -66,6 +64,39 @@ public class BoardServiceImpl implements BoardService {
 
         MyResponse body = MyResponse.builder()
                 .header(StatusEnum.OK)
+                .message("성공")
+                .build();
+
+        return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<MyResponse> get(Long id) {
+        Optional<Board> board = boardRepository.findById(id);
+        Board boardEntity = board.orElse(null);
+
+        if(board.isEmpty()) {
+            MyResponse body = MyResponse.builder()
+                    .header(StatusEnum.NOT_FOUND)
+                    .message("해당 게시글이 없습니다.")
+                    .build();
+
+            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+        }
+
+        boardEntity.count();
+
+        BoardDetailDTO boardDetailDTO = BoardDetailDTO.builder()
+                .id(boardEntity.getId())
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .createdAt(boardEntity.getCreatedAt())
+                .views(boardEntity.getViews())
+                .build();
+
+        MyResponse<BoardDetailDTO> body = MyResponse.<BoardDetailDTO>builder()
+                .header(StatusEnum.OK)
+                .body(boardDetailDTO)
                 .message("성공")
                 .build();
 

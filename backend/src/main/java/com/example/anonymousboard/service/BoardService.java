@@ -10,4 +10,6 @@ public interface BoardService {
 
     ResponseEntity<MyResponse> save(BoardFormDTO boardFormDTO);
 
+    ResponseEntity<MyResponse> get(Long id);
+
 }

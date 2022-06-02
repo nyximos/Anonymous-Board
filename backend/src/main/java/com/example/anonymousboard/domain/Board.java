@@ -35,4 +35,7 @@ public class Board {
     @Column(name = "views", nullable = false)
     private int views;
 
+    public void count() {
+        this.views++;
+    }
 }
