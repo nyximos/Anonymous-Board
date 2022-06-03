@@ -44,4 +44,10 @@ public class BoardApiController {
         ResponseEntity<MyResponse> responseEntity = boardService.update(id, boardUpdateFormDTO);
         return responseEntity;
     }
+
+    @DeleteMapping("/boards/{id}")
+    public ResponseEntity<MyResponse> remove(@PathVariable("id") Long id) {
+        ResponseEntity<MyResponse> responseEntity = boardService.remove(id);
+        return responseEntity;
+    }
 }
