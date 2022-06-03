@@ -142,4 +142,20 @@ public class BoardServiceImpl implements BoardService {
             return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
         }
     }
+
+    @Override
+    public ResponseEntity<MyResponse> update(Long id, BoardUpdateFormDTO boardUpdateFormDTO) {
+
+        Optional<Board> board = boardRepository.findById(id);
+        Board boardEntity = board.orElse(null);
+
+        boardEntity.update(boardUpdateFormDTO);
+
+        MyResponse body = MyResponse.builder()
+                .header(StatusEnum.OK)
+                .message("성공")
+                .build();
+
+        return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+    }
 }

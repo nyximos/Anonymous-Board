@@ -1,6 +1,7 @@
 package com.example.anonymousboard.controller;
 
 import com.example.anonymousboard.dto.BoardFormDTO;
+import com.example.anonymousboard.dto.BoardUpdateFormDTO;
 import com.example.anonymousboard.dto.MyResponse;
 import com.example.anonymousboard.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,12 @@ public class BoardApiController {
     @PostMapping("/boards")
     public ResponseEntity<MyResponse> save(@ModelAttribute BoardFormDTO boardFormDTO) {
         ResponseEntity<MyResponse> responseEntity = boardService.save(boardFormDTO);
+        return responseEntity;
+    }
+
+    @PatchMapping("/boards/{id}")
+    public ResponseEntity<MyResponse> update(@PathVariable("id") Long id, BoardUpdateFormDTO boardUpdateFormDTO) {
+        ResponseEntity<MyResponse> responseEntity = boardService.update(id, boardUpdateFormDTO);
         return responseEntity;
     }
 }

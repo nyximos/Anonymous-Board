@@ -1,5 +1,7 @@
 package com.example.anonymousboard.domain;
 
+import com.example.anonymousboard.dto.BoardUpdateFormDTO;
+import com.example.anonymousboard.util.StringUtils;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,5 +39,14 @@ public class Board {
 
     public void count() {
         this.views++;
+    }
+
+    public void update(BoardUpdateFormDTO boardUpdateFormDTO) {
+        if(StringUtils.isNotBlank(boardUpdateFormDTO.getTitle())) {
+            this.title = boardUpdateFormDTO.getTitle();
+        }
+        if(StringUtils.isNotBlank(boardUpdateFormDTO.getContent())) {
+            this.content = boardUpdateFormDTO.getContent();
+        }
     }
 }
