@@ -74,6 +74,30 @@ public class BoardServiceImpl implements BoardService {
         return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<MyResponse> getAllByTitle(String title) {
+        List<Board> boards = boardQueryRepository.findAllByTitle(title);
+        List<BoardListViewDTO> boardListViewDTOs = new ArrayList<>();
+
+        for (Board post : boards) {
+            BoardListViewDTO boardListViewDTO = BoardListViewDTO.builder()
+                    .id(post.getId())
+                    .title(post.getTitle())
+                    .createdAt(post.getCreatedAt())
+                    .views(post.getViews())
+                    .build();
+
+            boardListViewDTOs.add(boardListViewDTO);
+        }
+
+        MyResponse<List<BoardListViewDTO>> body = MyResponse.<List<BoardListViewDTO>>builder()
+                .header(StatusEnum.OK)
+                .body(boardListViewDTOs)
+                .message("성공")
+                .build();
+
+        return new ResponseEntity<MyResponse>(body, HttpStatus.OK);    }
+
 
     @Override
     public ResponseEntity<MyResponse> save(BoardFormDTO boardFormDTO) {

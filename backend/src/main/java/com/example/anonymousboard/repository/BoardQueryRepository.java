@@ -29,4 +29,12 @@ public class BoardQueryRepository {
                 .orderBy(board.views.desc())
                 .fetch();
     }
+
+    public List<Board> findAllByTitle(String title) {
+        return queryFactory
+                .selectFrom(board)
+                .where(board.title.contains(title))
+                .orderBy(board.createdAt.desc())
+                .fetch();
+    }
 }

@@ -11,6 +11,8 @@ public interface BoardService {
 
     ResponseEntity<MyResponse> getAllByViews();
 
+    ResponseEntity<MyResponse> getAllByTitle(String title);
+
     ResponseEntity<MyResponse> save(BoardFormDTO boardFormDTO);
 
     ResponseEntity<MyResponse> get(Long id);

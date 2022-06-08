@@ -27,6 +27,12 @@ public class BoardApiController {
         return responseEntity;
     }
 
+    @GetMapping("/boards/title")
+    public ResponseEntity<MyResponse> getAllByTitle(@RequestParam("title") String title) {
+        ResponseEntity<MyResponse> responseEntity = boardService.getAllByTitle(title);
+        return responseEntity;
+    }
+
     @GetMapping("/boards/{id}")
     public ResponseEntity<MyResponse> get(@PathVariable("id") Long id) {
         ResponseEntity<MyResponse> responseEntity = boardService.get(id);
