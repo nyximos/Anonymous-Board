@@ -21,11 +21,11 @@ import kotlin.collections.ArrayList
               즉, Holder가 listview 그릇을 만들면 Adapter가 실제 데이터를 담은 listView를 만들어주는 것.
  */
 
-class BoardRecyclerViewAdapter(val context: Context, val boardList: ArrayList<BoardListDTO>?) :
+class BoardRecyclerViewAdapter(val context: Context, val boardList: ArrayList<BoardListDTO>?, val click: (BoardListDTO) -> Unit) :
     RecyclerView.Adapter<BoardRecyclerViewAdapter.BoardViewHolder>() {
 
 
-    inner class BoardViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
+    inner class BoardViewHolder(view: View?, click: (BoardListDTO) -> Unit): RecyclerView.ViewHolder(view!!) {
 //        val dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE
 
         val id: TextView? = view?.findViewById(R.id.id)
@@ -38,6 +38,12 @@ class BoardRecyclerViewAdapter(val context: Context, val boardList: ArrayList<Bo
             title?.text = board?.title
             createdAt?.text = board?.createdAt
             views?.text = board?.views.toString()
+
+            itemView.setOnClickListener {
+                if (board != null) {
+                    click(board)
+                }
+            }
         }
     }
 
@@ -50,7 +56,7 @@ class BoardRecyclerViewAdapter(val context: Context, val boardList: ArrayList<Bo
         val view = LayoutInflater
             .from(context)
             .inflate(R.layout.item_list, parent, false)
-        return BoardViewHolder(view)
+        return BoardViewHolder(view,click)
     }
 
     /* ViewHolder에 데이터 바인딩하는 함수

@@ -14,11 +14,12 @@ import retrofit2.http.Path
  */
 interface BoardApi {
 
-//    @FormUrlEncoded
     @GET("/api/boards")
     fun getBoards(): Call<BoardListDTOs>
 
-//    @FormUrlEncoded
+    @GET("/api/boards/views")
+    fun getBoardsByViews(): Call<BoardListDTOs>
+
     @GET("/api/boards/{id}")
     fun getBoard(@Path("id") id:Long): Call<Board>
 }

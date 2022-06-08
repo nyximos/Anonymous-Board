@@ -3,6 +3,9 @@ package eu.tutorials.anonymousboard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import eu.tutorials.anonymousboard.databinding.ActivityMainBinding
@@ -16,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
     private var boardList: ArrayList<BoardListDTO>? = null
+    private var btnSort: Button? = null
+    private var sortStatus: Int = 0
 
 //    var boardList = arrayListOf<BoardListDTO>(
 //        BoardListDTO(1, "놀고싶당", "2022-06-01", 1),
@@ -28,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        btnSort = findViewById(R.id.sort)
 
         // 게시글 전체 조회 실행
         viewModel.getBoards()
@@ -43,8 +50,22 @@ class MainActivity : AppCompatActivity() {
         viewModel.boards.observe(this) {
             boardList = viewModel.boards.value?.body
             Log.d("RESPONSE", "${it.toString()}")
-            val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList)
+            val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList) { board->
+                Toast.makeText(this, "제목은 ${board.title} 입니다", Toast.LENGTH_SHORT).show()
+            }
             binding.recyclerView.adapter = boardRecyclerViewAdapter
+        }
+
+        btnSort?.setOnClickListener{
+            if (sortStatus == 0) {
+                binding.sort.text = "조회순"
+                sortStatus = 1
+                viewModel.getBoardsByViews()
+            } else {
+                binding.sort.text = "최신순"
+                sortStatus = 0
+                viewModel.getBoards()
+            }
         }
 
     }
