@@ -9,6 +9,8 @@ public interface BoardService {
 
     ResponseEntity<MyResponse> getAll();
 
+    ResponseEntity<MyResponse> getAllByViews();
+
     ResponseEntity<MyResponse> save(BoardFormDTO boardFormDTO);
 
     ResponseEntity<MyResponse> get(Long id);

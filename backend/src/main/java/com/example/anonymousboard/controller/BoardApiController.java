@@ -21,6 +21,12 @@ public class BoardApiController {
         return responseEntity;
     }
 
+    @GetMapping("/boards/views")
+    public ResponseEntity<MyResponse> getAllByViews() {
+        ResponseEntity<MyResponse> responseEntity = boardService.getAllByViews();
+        return responseEntity;
+    }
+
     @GetMapping("/boards/{id}")
     public ResponseEntity<MyResponse> get(@PathVariable("id") Long id) {
         ResponseEntity<MyResponse> responseEntity = boardService.get(id);

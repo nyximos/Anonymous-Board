@@ -22,4 +22,11 @@ public class BoardQueryRepository {
                 .orderBy(board.createdAt.desc())
                 .fetch();
     }
+
+    public List<Board> findAllByViews() {
+        return queryFactory
+                .selectFrom(board)
+                .orderBy(board.views.desc())
+                .fetch();
+    }
 }
