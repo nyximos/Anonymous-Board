@@ -1,6 +1,5 @@
 package eu.tutorials.anonymousboard
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -24,10 +23,11 @@ class MainViewModel : ViewModel() {
         request.enqueue(object : Callback<BoardListDTOs> {
 
             override fun onResponse(call: Call<BoardListDTOs>, response: Response<BoardListDTOs>) {
-                boards.value = response.body()
-                Log.d("RESPONSE", "성공 : ${response.raw()}")
-                Log.i("RESPONSE", "게시글 전체 조회 성공 : ${response.body()}")
-
+                if(response.isSuccessful) {
+                    boards.value = response.body()
+                    Log.d("RESPONSE", "성공 : ${response.raw()}")
+                    Log.i("RESPONSE", "게시글 전체 조회 성공 : ${response.body()}")
+                }
             }
 
             override fun onFailure(call: Call<BoardListDTOs>, t: Throwable) {
