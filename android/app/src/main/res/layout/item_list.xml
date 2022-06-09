@@ -31,7 +31,8 @@
             android:maxLines="1"
             android:text="글제목"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:maxWidth="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/idText"
             app:layout_constraintTop_toTopOf="parent" />
