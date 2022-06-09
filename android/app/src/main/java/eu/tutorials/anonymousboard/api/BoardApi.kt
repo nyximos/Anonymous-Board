@@ -1,7 +1,7 @@
 package eu.tutorials.anonymousboard.api
 
-import eu.tutorials.anonymousboard.Board
-import eu.tutorials.anonymousboard.dto.BoardListDTOs
+import eu.tutorials.anonymousboard.dto.BoardListResponseDTO
+import eu.tutorials.anonymousboard.dto.BoardResponseDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,14 +16,14 @@ import retrofit2.http.Query
 interface BoardApi {
 
     @GET("/api/boards")
-    fun getBoards(): Call<BoardListDTOs>
+    fun getBoards(): Call<BoardListResponseDTO>
 
     @GET("/api/boards/views")
-    fun getBoardsByViews(): Call<BoardListDTOs>
+    fun getBoardsByViews(): Call<BoardListResponseDTO>
 
     @GET("/api/boards/{id}")
-    fun getBoard(@Path("id") id:Long): Call<Board>
+    fun getBoard(@Path("id") id:Long): Call<BoardResponseDTO>
 
     @GET("/api/boards/title")
-    fun getBoardsByTitle(@Query("title") title: String?): Call<BoardListDTOs>
+    fun getBoardsByTitle(@Query("title") title: String?): Call<BoardListResponseDTO>
 }

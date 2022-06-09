@@ -1,11 +1,9 @@
 package eu.tutorials.anonymousboard
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import androidx.appcompat.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import eu.tutorials.anonymousboard.databinding.ActivityMainBinding
@@ -19,9 +17,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
     private var boardList: ArrayList<BoardListDTO>? = null
-    private var btnSort: Button? = null
     private var sortStatus: Int = 0
-    private var searchView: SearchView? = null
+    private var id: Long? = null
 
 //    var boardList = arrayListOf<BoardListDTO>(
 //        BoardListDTO(1, "촉촉한 초코칩", "2022-06-01", 1),
@@ -35,8 +32,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        btnSort = binding.sort
-        searchView = binding.search
+        var btnSort = binding.sort
+        var btnWrite = binding.write
+        var searchView = binding.search
         searchView!!.isSubmitButtonEnabled = true
 
         // 게시글 전체 조회 실행
@@ -52,14 +50,18 @@ class MainActivity : AppCompatActivity() {
         // viewModel 클래스에 boards가 바뀌면 실행
         viewModel.boards.observe(this) {
             boardList = viewModel.boards.value?.body
-            Log.d("RESPONSE", "${it.toString()}")
-            val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList) { board->
-                Toast.makeText(this, "제목은 ${board.title} 입니다", Toast.LENGTH_SHORT).show()
+            val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList) { board ->
+                id = board.id
+                val intent = Intent(this, DetailActivity::class.java).apply {
+                    putExtra("id", id)
+                }
+                startActivity(intent)
             }
+
             binding.recyclerView.adapter = boardRecyclerViewAdapter
         }
 
-        btnSort?.setOnClickListener{
+        btnSort?.setOnClickListener {
             if (sortStatus == 0) {
                 binding.sort.text = "조회순"
                 sortStatus = 1
@@ -76,14 +78,12 @@ class MainActivity : AppCompatActivity() {
 
                 // 검색 버튼 누를 때 호출
                 viewModel.getBoardsByTitle(title)
-
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 // 검색창에서 글자가 변경이 일어날 때마다 호출
-
                 return true
             }
         })
