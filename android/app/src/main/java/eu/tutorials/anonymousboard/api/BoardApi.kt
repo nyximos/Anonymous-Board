@@ -5,6 +5,7 @@ import eu.tutorials.anonymousboard.dto.BoardListDTOs
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 /*
@@ -22,4 +23,7 @@ interface BoardApi {
 
     @GET("/api/boards/{id}")
     fun getBoard(@Path("id") id:Long): Call<Board>
+
+    @GET("/api/boards/title")
+    fun getBoardsByTitle(@Query("title") title: String?): Call<BoardListDTOs>
 }

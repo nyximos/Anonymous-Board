@@ -53,7 +53,28 @@ class MainViewModel : ViewModel() {
                 error.value = t.localizedMessage
                 Log.d("RESPONSE", "실패 : $t")
             }
-        })    }
+        })
+    }
+
+
+    fun getBoardsByTitle(title: String?) {
+        val request = JsServer.boardApi.getBoardsByTitle(title)
+        request.enqueue(object : Callback<BoardListDTOs> {
+
+            override fun onResponse(call: Call<BoardListDTOs>, response: Response<BoardListDTOs>) {
+                if(response.isSuccessful) {
+                    boards.value = response.body()
+                    Log.d("RESPONSE", "성공 : ${response.raw()}")
+                    Log.i("RESPONSE", "게시글 조회 성공 : ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BoardListDTOs>, t: Throwable) {
+                error.value = t.localizedMessage
+                Log.d("RESPONSE", "실패 : $t")
+            }
+        })
+    }
 
     fun getBoard(id: Long) = viewModelScope.launch {
         val request = JsServer.boardApi.getBoard(id)

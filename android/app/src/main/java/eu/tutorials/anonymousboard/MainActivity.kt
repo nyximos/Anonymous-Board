@@ -3,8 +3,8 @@ package eu.tutorials.anonymousboard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,10 +21,11 @@ class MainActivity : AppCompatActivity() {
     private var boardList: ArrayList<BoardListDTO>? = null
     private var btnSort: Button? = null
     private var sortStatus: Int = 0
+    private var searchView: SearchView? = null
 
 //    var boardList = arrayListOf<BoardListDTO>(
-//        BoardListDTO(1, "놀고싶당", "2022-06-01", 1),
-//        BoardListDTO(2, "테스트", "2022-06-02", 2),
+//        BoardListDTO(1, "촉촉한 초코칩", "2022-06-01", 1),
+//        BoardListDTO(2, "딸기케이크", "2022-06-02", 2),
 //        BoardListDTO(3, "피자빵", "2022-06-03", 3),
 //        BoardListDTO(4, "양념치킨", "2022-06-04", 4),
 //        BoardListDTO(5, "메론", "2022-06-05", 5)
@@ -34,7 +35,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        btnSort = findViewById(R.id.sort)
+        btnSort = binding.sort
+        searchView = binding.search
+        searchView!!.isSubmitButtonEnabled = true
 
         // 게시글 전체 조회 실행
         viewModel.getBoards()
@@ -67,6 +70,23 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getBoards()
             }
         }
+
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(title: String?): Boolean {
+
+                // 검색 버튼 누를 때 호출
+                viewModel.getBoardsByTitle(title)
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                // 검색창에서 글자가 변경이 일어날 때마다 호출
+
+                return true
+            }
+        })
 
     }
 }
