@@ -29,11 +29,15 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel.board.observe(this) {
             board = viewModel.board.value
-            binding.id?.text = board?.id.toString()
-            binding.title?.text = board?.title
-            binding.createdAt?.text = board?.createdAt
-            binding.views?.text = board?.views.toString()
-            binding.content?.text = board?.content.toString()
+            binding.id.text = board?.id.toString()
+            binding.title.text = board?.title
+            binding.createdAt.text = board?.createdAt
+            binding.views.text = board?.views.toString()
+            binding.content.text = board?.content.toString()
+        }
+
+        binding.list.setOnClickListener{
+            finish()
         }
     }
 }
