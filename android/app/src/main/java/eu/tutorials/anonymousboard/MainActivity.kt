@@ -75,15 +75,14 @@ class MainActivity : AppCompatActivity() {
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(title: String?): Boolean {
-
                 // 검색 버튼 누를 때 호출
                 viewModel.getBoardsByTitle(title)
                 return true
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-
+            override fun onQueryTextChange(title: String?): Boolean {
                 // 검색창에서 글자가 변경이 일어날 때마다 호출
+                viewModel.getBoardsByTitle(title)
                 return true
             }
         })
