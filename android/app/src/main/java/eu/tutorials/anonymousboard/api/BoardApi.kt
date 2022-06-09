@@ -2,10 +2,10 @@ package eu.tutorials.anonymousboard.api
 
 import eu.tutorials.anonymousboard.dto.BoardListResponseDTO
 import eu.tutorials.anonymousboard.dto.BoardResponseDTO
+import eu.tutorials.anonymousboard.dto.ResponseDTO
+import eu.tutorials.anonymousboard.dto.BoardFormDTO
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 /*
@@ -26,4 +26,7 @@ interface BoardApi {
 
     @GET("/api/boards/title")
     fun getBoardsByTitle(@Query("title") title: String?): Call<BoardListResponseDTO>
+
+    @POST("/api/boards")
+    fun save(@Body boardFormDTO: BoardFormDTO): Call<ResponseDTO>
 }

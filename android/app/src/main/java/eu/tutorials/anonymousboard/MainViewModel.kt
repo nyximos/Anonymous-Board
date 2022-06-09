@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
 import eu.tutorials.anonymousboard.api.JsServer
-import eu.tutorials.anonymousboard.dto.BoardDTO
-import eu.tutorials.anonymousboard.dto.BoardListResponseDTO
-import eu.tutorials.anonymousboard.dto.BoardResponseDTO
+import eu.tutorials.anonymousboard.dto.*
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -93,6 +91,21 @@ class MainViewModel : ViewModel() {
             override fun onFailure(call: Call<BoardResponseDTO>, t: Throwable) {
                 error.value = t.localizedMessage
             }
+        })
+    }
+
+    fun save(title: String, password: String, content: String){
+        val boardFormDto = BoardFormDTO(title, password, content)
+        val request = JsServer.boardApi.save(boardFormDto)
+        request.enqueue(object : Callback<ResponseDTO>{
+            override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                Log.d("RESPONSE", "성공 : ${response.raw()}")
+            }
+
+            override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                error.value = t.localizedMessage
+            }
+
         })
     }
 

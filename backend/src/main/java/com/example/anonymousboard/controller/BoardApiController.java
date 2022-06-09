@@ -46,7 +46,7 @@ public class BoardApiController {
     }
 
     @PostMapping("/boards")
-    public ResponseEntity<MyResponse> save(@ModelAttribute BoardFormDTO boardFormDTO) {
+    public ResponseEntity<MyResponse> save(@RequestBody BoardFormDTO boardFormDTO) {
         ResponseEntity<MyResponse> responseEntity = boardService.save(boardFormDTO);
         return responseEntity;
     }

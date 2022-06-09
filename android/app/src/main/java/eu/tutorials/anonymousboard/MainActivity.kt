@@ -3,6 +3,7 @@ package eu.tutorials.anonymousboard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             binding.recyclerView.adapter = boardRecyclerViewAdapter
         }
 
-        btnSort?.setOnClickListener {
+        btnSort.setOnClickListener {
             if (sortStatus == 0) {
                 binding.sort.text = "조회순"
                 sortStatus = 1
@@ -71,6 +72,12 @@ class MainActivity : AppCompatActivity() {
                 sortStatus = 0
                 viewModel.getBoards()
             }
+        }
+
+
+        btnWrite.setOnClickListener {
+            val intent = Intent(this, NewActivity::class.java)
+            startActivity(intent)
         }
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
