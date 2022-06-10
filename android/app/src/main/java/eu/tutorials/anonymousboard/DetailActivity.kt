@@ -82,10 +82,13 @@ class DetailActivity : AppCompatActivity() {
 
             val idText : String = binding.id.text.toString()
             val id = idText.toLong()
-            
+
             val intent = Intent(this, UpdateActivity::class.java).apply {
                 putExtra("id", id)
+                putExtra("title", binding.title.text)
+                putExtra("content", binding.content.text)
             }
+            finish()
             startActivity(intent)
         }
 

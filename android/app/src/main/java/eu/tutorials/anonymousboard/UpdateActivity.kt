@@ -12,6 +12,8 @@ import eu.tutorials.anonymousboard.dto.BoardDTO
 class UpdateActivity : AppCompatActivity() {
 
     private var contentId: Long? = null
+    private var title: String? = null
+    private var content: String? = null
     var board: BoardDTO? = null
 
     private val binding by lazy {
@@ -28,15 +30,12 @@ class UpdateActivity : AppCompatActivity() {
 
         with(intent) {
             contentId = getLongExtra("id", 0)
+            title = getStringExtra("title")
+            content = getStringExtra("content")
         }
 
-        contentId?.let { viewModel.getBoard(contentId!!) }
-
-        viewModel.board.observe(this) {
-            board = viewModel.board.value
-            binding.title.append(board?.title)
-            binding.content.append(board?.content)
-        }
+        binding.title.append(title)
+        binding.content.append(content)
 
         binding.list.setOnClickListener {
             finish()

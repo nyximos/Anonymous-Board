@@ -98,5 +98,14 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.getBoards()
+        boardList = viewModel.boards.value?.body
+        val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList) { board ->
+            id = board.id
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra("id", id)
+            }
+            startActivity(intent)
+        }
+        binding.recyclerView.adapter = boardRecyclerViewAdapter
     }
 }
