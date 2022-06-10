@@ -58,8 +58,8 @@ public class BoardApiController {
     }
 
     @DeleteMapping("/boards/{id}")
-    public ResponseEntity<MyResponse> remove(@PathVariable("id") Long id) {
-        ResponseEntity<MyResponse> responseEntity = boardService.remove(id);
+    public ResponseEntity<MyResponse> remove(@PathVariable("id") Long id, @RequestParam("password") String password) {
+        ResponseEntity<MyResponse> responseEntity = boardService.remove(id, password);
         return responseEntity;
     }
 }

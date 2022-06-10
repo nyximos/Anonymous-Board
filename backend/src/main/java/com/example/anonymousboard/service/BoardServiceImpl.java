@@ -210,15 +210,28 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public ResponseEntity<MyResponse> remove(Long id) {
+    public ResponseEntity<MyResponse> remove(Long id, String password) {
 
-        boardRepository.deleteById(id);
+        Optional<Board> board = boardRepository.findById(id);
+        Board boardEntity = board.orElse(null);
+        String boardPassword = boardEntity.getPassword();
 
-        MyResponse body = MyResponse.builder()
-                .header(StatusEnum.OK)
-                .message("성공")
-                .build();
+        if(boardPassword.equals(password)) {
+            boardRepository.deleteById(id);
 
-        return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+            MyResponse body = MyResponse.builder()
+                    .header(StatusEnum.OK)
+                    .message("성공")
+                    .build();
+            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+
+        } else {
+            MyResponse body = MyResponse.builder()
+                    .header(StatusEnum.BAD_REQUEST)
+                    .message("비밀번호가 일치하지 않습니다.")
+                    .build();
+
+            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+        }
     }
 }

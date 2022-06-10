@@ -21,6 +21,6 @@ public interface BoardService {
 
     ResponseEntity<MyResponse> update(Long id, BoardUpdateFormDTO boardUpdateFormDTO);
 
-    ResponseEntity<MyResponse> remove(Long id);
+    ResponseEntity<MyResponse> remove(Long id, String password);
 
 }

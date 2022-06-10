@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -55,6 +56,9 @@ class DetailActivity : AppCompatActivity() {
         binding.delete.setOnClickListener {
             val layoutInflater = LayoutInflater.from(this)
             val view = layoutInflater.inflate(R.layout.dialog, null)
+            val password = view.findViewById<TextView>(R.id.password)
+            val idText : String = binding.id.text.toString()
+            val id : Long = idText.toLong()
 
             alertDialog = AlertDialog.Builder(this, R.style.CustomAlertDialog)
                 .setView(view)
@@ -62,8 +66,14 @@ class DetailActivity : AppCompatActivity() {
 
             alertDialog!!.show()
             view.findViewById<Button>(R.id.close).setOnClickListener {
-                Toast.makeText(this, "빵빠레", Toast.LENGTH_SHORT).show()
                 alertDialog?.dismiss()
+            }
+
+            view.findViewById<Button>(R.id.send).setOnClickListener {
+//                Toast.makeText(this, "${password.text}", Toast.LENGTH_SHORT).show()
+                viewModel.remove(id,password.text.toString())
+                alertDialog?.dismiss()
+                finish()
             }
         }
 

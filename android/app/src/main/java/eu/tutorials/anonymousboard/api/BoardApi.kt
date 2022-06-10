@@ -29,4 +29,7 @@ interface BoardApi {
 
     @POST("/api/boards")
     fun save(@Body boardFormDTO: BoardFormDTO): Call<ResponseDTO>
+
+    @DELETE("/api/boards/{id}")
+    fun remove(@Path("id") id: Long, @Query("password") password: String) : Call<ResponseDTO>
 }

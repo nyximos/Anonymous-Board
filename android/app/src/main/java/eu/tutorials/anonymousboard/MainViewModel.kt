@@ -37,7 +37,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getBoardsByViews() {
+    fun getBoardsByViews() = viewModelScope.launch  {
         val request = JsServer.boardApi.getBoardsByViews()
         request.enqueue(object : Callback<BoardListResponseDTO> {
 
@@ -57,7 +57,7 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun getBoardsByTitle(title: String?) {
+    fun getBoardsByTitle(title: String?) =  viewModelScope.launch  {
         val request = JsServer.boardApi.getBoardsByTitle(title)
         request.enqueue(object : Callback<BoardListResponseDTO> {
 
@@ -94,7 +94,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun save(title: String, password: String, content: String){
+    fun save(title: String, password: String, content: String) =  viewModelScope.launch {
         val boardFormDto = BoardFormDTO(title, password, content)
         val request = JsServer.boardApi.save(boardFormDto)
         request.enqueue(object : Callback<ResponseDTO>{
@@ -112,6 +112,20 @@ class MainViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         if (::request.isInitialized) request.cancel()
+    }
+
+    fun remove(id: Long, password: String) =  viewModelScope.launch  {
+        val request = JsServer.boardApi.remove(id, password)
+        request.enqueue(object : Callback<ResponseDTO>{
+            override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                Log.d("RESPONSE", "성공 : ${response.raw()}")
+            }
+
+            override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                error.value = t.localizedMessage
+            }
+
+        })
     }
 
 }
