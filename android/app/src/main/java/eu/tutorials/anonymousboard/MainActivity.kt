@@ -3,9 +3,15 @@ package eu.tutorials.anonymousboard
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import eu.tutorials.anonymousboard.api.Server
 import eu.tutorials.anonymousboard.databinding.ActivityMainBinding
 import eu.tutorials.anonymousboard.dto.BoardListDTO
 
@@ -19,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private var boardList: ArrayList<BoardListDTO>? = null
     private var sortStatus: Int = 0
     private var id: Long? = null
+    private var alertDialog: AlertDialog? = null
+
 
 //    var boardList = arrayListOf<BoardListDTO>(
 //        BoardListDTO(1, "촉촉한 초코칩", "2022-06-01", 1),
@@ -34,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         var btnSort = binding.sort
         var btnWrite = binding.write
+        var btnServer = binding.server
         var searchView = binding.search
         searchView!!.isSubmitButtonEnabled = true
 
@@ -92,6 +101,32 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+
+        btnServer.setOnClickListener {
+            val layoutInflater = LayoutInflater.from(this)
+            val view = layoutInflater.inflate(R.layout.server, null)
+            var now = view.findViewById<TextView>(R.id.now)
+            var newServer = view.findViewById<TextView>(R.id.newServer)
+            now.append(Server.url)
+
+            alertDialog = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .setView(view)
+                .create()
+
+            alertDialog!!.show()
+            view.findViewById<Button>(R.id.close).setOnClickListener {
+                alertDialog?.dismiss()
+            }
+
+            view.findViewById<Button>(R.id.change).setOnClickListener {
+                val currentUrl = newServer.text
+                Server.url = newServer.text.toString()
+                Server.changeUrl()
+                Toast.makeText(this, "변경 완료!", Toast.LENGTH_SHORT).show()
+                alertDialog?.dismiss()
+                now.text = Server.url
+            }
+        }
 
     }
 

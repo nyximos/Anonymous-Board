@@ -23,10 +23,6 @@ class DetailActivity : AppCompatActivity() {
         ActivityDetailBinding.inflate(layoutInflater)
     }
 
-    private val dialog by lazy {
-        DialogBinding.inflate(layoutInflater)
-    }
-
     var alertDialog: AlertDialog? = null
 
 

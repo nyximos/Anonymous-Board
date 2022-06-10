@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
-import eu.tutorials.anonymousboard.api.JsServer
+import eu.tutorials.anonymousboard.api.Server
 import eu.tutorials.anonymousboard.dto.*
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -19,7 +19,7 @@ class MainViewModel : ViewModel() {
     lateinit var request: Call<BoardDTO>
 
     fun getBoards() = viewModelScope.launch {
-        val request = JsServer.boardApi.getBoards()
+        val request = Server.boardApi.getBoards()
         request.enqueue(object : Callback<BoardListResponseDTO> {
 
             override fun onResponse(call: Call<BoardListResponseDTO>, response: Response<BoardListResponseDTO>) {
@@ -38,7 +38,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun getBoardsByViews() = viewModelScope.launch  {
-        val request = JsServer.boardApi.getBoardsByViews()
+        val request = Server.boardApi.getBoardsByViews()
         request.enqueue(object : Callback<BoardListResponseDTO> {
 
             override fun onResponse(call: Call<BoardListResponseDTO>, response: Response<BoardListResponseDTO>) {
@@ -58,7 +58,7 @@ class MainViewModel : ViewModel() {
 
 
     fun getBoardsByTitle(title: String?) =  viewModelScope.launch  {
-        val request = JsServer.boardApi.getBoardsByTitle(title)
+        val request = Server.boardApi.getBoardsByTitle(title)
         request.enqueue(object : Callback<BoardListResponseDTO> {
 
             override fun onResponse(call: Call<BoardListResponseDTO>, response: Response<BoardListResponseDTO>) {
@@ -77,7 +77,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun getBoard(id: Long) = viewModelScope.launch {
-        val request = JsServer.boardApi.getBoard(id)
+        val request = Server.boardApi.getBoard(id)
         request.enqueue(object : Callback<BoardResponseDTO> {
 
             //            응답
@@ -96,7 +96,7 @@ class MainViewModel : ViewModel() {
 
     fun save(title: String, password: String, content: String) =  viewModelScope.launch {
         val boardFormDto = BoardFormDTO(title, password, content)
-        val request = JsServer.boardApi.save(boardFormDto)
+        val request = Server.boardApi.save(boardFormDto)
         request.enqueue(object : Callback<ResponseDTO>{
             override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
                 Log.d("RESPONSE", "성공 : ${response.raw()}")
@@ -115,7 +115,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun remove(id: Long, password: String) =  viewModelScope.launch  {
-        val request = JsServer.boardApi.remove(id, password)
+        val request = Server.boardApi.remove(id, password)
         request.enqueue(object : Callback<ResponseDTO>{
             override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
                 Log.d("RESPONSE", "성공 : ${response.raw()}")
@@ -130,7 +130,7 @@ class MainViewModel : ViewModel() {
 
     fun update(id: Long?, title: String, password: String, content: String) {
         val boardFormDto = BoardFormDTO(title, password, content)
-        val request = JsServer.boardApi.update(id!!, boardFormDto)
+        val request = Server.boardApi.update(id!!, boardFormDto)
         request.enqueue(object : Callback<ResponseDTO>{
             override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
                 Log.d("RESPONSE", "성공 : ${response.raw()}")
