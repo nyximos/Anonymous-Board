@@ -119,7 +119,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             view.findViewById<Button>(R.id.change).setOnClickListener {
-                val currentUrl = newServer.text
                 Server.url = newServer.text.toString()
                 Server.changeUrl()
                 Toast.makeText(this, "변경 완료!", Toast.LENGTH_SHORT).show()

@@ -2,8 +2,6 @@ package eu.tutorials.anonymousboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import eu.tutorials.anonymousboard.databinding.ActivityUpdateBinding

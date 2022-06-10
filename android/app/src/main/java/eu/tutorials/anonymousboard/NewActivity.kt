@@ -2,8 +2,6 @@ package eu.tutorials.anonymousboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.text.TextUtils.isEmpty
 import android.widget.Toast
 import androidx.activity.viewModels
 import eu.tutorials.anonymousboard.databinding.ActivityNewBinding

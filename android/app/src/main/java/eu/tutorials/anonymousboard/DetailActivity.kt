@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import eu.tutorials.anonymousboard.databinding.ActivityDetailBinding
-import eu.tutorials.anonymousboard.databinding.DialogBinding
 import eu.tutorials.anonymousboard.dto.BoardDTO
 
 class DetailActivity : AppCompatActivity() {
