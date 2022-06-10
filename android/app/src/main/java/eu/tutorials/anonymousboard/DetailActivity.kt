@@ -1,12 +1,11 @@
 package eu.tutorials.anonymousboard
 
-import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import eu.tutorials.anonymousboard.databinding.ActivityDetailBinding
@@ -34,6 +33,8 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        var btnUpdate = binding.update
 
         with(intent) {
             contentId = getLongExtra("id", 0)
@@ -77,7 +78,16 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
+        btnUpdate.setOnClickListener {
 
+            val idText : String = binding.id.text.toString()
+            val id = idText.toLong()
+            
+            val intent = Intent(this, UpdateActivity::class.java).apply {
+                putExtra("id", id)
+            }
+            startActivity(intent)
+        }
 
     }
 }

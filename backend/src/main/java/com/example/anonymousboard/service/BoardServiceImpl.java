@@ -199,14 +199,24 @@ public class BoardServiceImpl implements BoardService {
         Optional<Board> board = boardRepository.findById(id);
         Board boardEntity = board.orElse(null);
 
-        boardEntity.update(boardUpdateFormDTO);
+        if(boardEntity.getPassword().equals(boardUpdateFormDTO.getPassword())) {
+            boardEntity.update(boardUpdateFormDTO);
 
-        MyResponse body = MyResponse.builder()
-                .header(StatusEnum.OK)
-                .message("성공")
-                .build();
+            MyResponse body = MyResponse.builder()
+                    .header(StatusEnum.OK)
+                    .message("성공")
+                    .build();
 
-        return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+        } else {
+            MyResponse body = MyResponse.builder()
+                    .header(StatusEnum.BAD_REQUEST)
+                    .message("비밀번호가 일치하지 않습니다.")
+                    .build();
+
+            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
+        }
+
     }
 
     @Override

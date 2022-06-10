@@ -128,4 +128,19 @@ class MainViewModel : ViewModel() {
         })
     }
 
+    fun update(id: Long?, title: String, password: String, content: String) {
+        val boardFormDto = BoardFormDTO(title, password, content)
+        val request = JsServer.boardApi.update(id!!, boardFormDto)
+        request.enqueue(object : Callback<ResponseDTO>{
+            override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                Log.d("RESPONSE", "성공 : ${response.raw()}")
+            }
+
+            override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                error.value = t.localizedMessage
+            }
+
+        })
+    }
+
 }

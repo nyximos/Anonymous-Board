@@ -52,7 +52,7 @@ public class BoardApiController {
     }
 
     @PatchMapping("/boards/{id}")
-    public ResponseEntity<MyResponse> update(@PathVariable("id") Long id, BoardUpdateFormDTO boardUpdateFormDTO) {
+    public ResponseEntity<MyResponse> update(@PathVariable("id") Long id,@RequestBody BoardUpdateFormDTO boardUpdateFormDTO) {
         ResponseEntity<MyResponse> responseEntity = boardService.update(id, boardUpdateFormDTO);
         return responseEntity;
     }

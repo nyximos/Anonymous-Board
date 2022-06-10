@@ -12,6 +12,7 @@ import lombok.Setter;
 public class BoardUpdateFormDTO {
 
     private String title;
+    private String password;
     private String content;
 
 }

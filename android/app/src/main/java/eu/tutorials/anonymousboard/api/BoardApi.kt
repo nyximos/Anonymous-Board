@@ -32,4 +32,7 @@ interface BoardApi {
 
     @DELETE("/api/boards/{id}")
     fun remove(@Path("id") id: Long, @Query("password") password: String) : Call<ResponseDTO>
+
+    @PATCH("/api/boards/{id}")
+    fun update(@Path("id") id:Long, @Body boardFormDTO: BoardFormDTO): Call<ResponseDTO>
 }
