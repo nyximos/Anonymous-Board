@@ -1,9 +1,15 @@
 package eu.tutorials.anonymousboard
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import eu.tutorials.anonymousboard.databinding.ActivityDetailBinding
+import eu.tutorials.anonymousboard.databinding.DialogBinding
 import eu.tutorials.anonymousboard.dto.BoardDTO
 
 class DetailActivity : AppCompatActivity() {
@@ -16,6 +22,12 @@ class DetailActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
+
+    private val dialog by lazy {
+        DialogBinding.inflate(layoutInflater)
+    }
+
+    var alertDialog: AlertDialog? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +48,26 @@ class DetailActivity : AppCompatActivity() {
             binding.content.text = board?.content.toString()
         }
 
-        binding.list.setOnClickListener{
+        binding.list.setOnClickListener {
             finish()
         }
+
+        binding.delete.setOnClickListener {
+            val layoutInflater = LayoutInflater.from(this)
+            val view = layoutInflater.inflate(R.layout.dialog, null)
+
+            alertDialog = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .setView(view)
+                .create()
+
+            alertDialog!!.show()
+            view.findViewById<Button>(R.id.close).setOnClickListener {
+                Toast.makeText(this, "빵빠레", Toast.LENGTH_SHORT).show()
+                alertDialog?.dismiss()
+            }
+        }
+
+
+
     }
 }

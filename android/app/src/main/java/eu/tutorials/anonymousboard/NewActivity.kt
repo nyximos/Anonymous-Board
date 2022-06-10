@@ -44,10 +44,10 @@ class NewActivity : AppCompatActivity() {
             if (content.isBlank()) {
                 Toast.makeText(this, "내용을 입력하세요", Toast.LENGTH_SHORT).show()
             }
-            if (title.isNotBlank() && password.isNotBlank() && content.isNotBlank())
+            if (title.isNotBlank() && password.isNotBlank() && content.isNotBlank()) {
                 viewModel.save(title.toString(), password.toString(), content.toString())
-
-            finish()
+                finish()
+            }
         }
     }
 }
