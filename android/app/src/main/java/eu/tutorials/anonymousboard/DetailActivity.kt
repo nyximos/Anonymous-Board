@@ -29,8 +29,6 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        var btnUpdate = binding.update
-
         with(intent) {
             contentId = getLongExtra("id", 0)
         }
@@ -73,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        btnUpdate.setOnClickListener {
+        binding.update.setOnClickListener {
 
             val idText : String = binding.id.text.toString()
             val id = idText.toLong()

@@ -40,11 +40,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        var btnSort = binding.sort
-        var btnWrite = binding.write
-        var btnServer = binding.server
-        var searchView = binding.search
-        searchView!!.isSubmitButtonEnabled = true
+        binding.search.isSubmitButtonEnabled = true
 
         // 게시글 전체 조회 실행
         viewModel.getBoards()
@@ -70,25 +66,25 @@ class MainActivity : AppCompatActivity() {
             binding.recyclerView.adapter = boardRecyclerViewAdapter
         }
 
-        btnSort.setOnClickListener {
+        binding.sort.setOnClickListener {
             if (sortStatus == 0) {
-                binding.sort.text = "조회순"
+                binding.sort.text = "최신순"
                 sortStatus = 1
                 viewModel.getBoardsByViews()
             } else {
-                binding.sort.text = "최신순"
+                binding.sort.text = "조회순"
                 sortStatus = 0
                 viewModel.getBoards()
             }
         }
 
 
-        btnWrite.setOnClickListener {
+        binding.write.setOnClickListener {
             val intent = Intent(this, NewActivity::class.java)
             startActivity(intent)
         }
 
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(title: String?): Boolean {
                 // 검색 버튼 누를 때 호출
                 viewModel.getBoardsByTitle(title)
@@ -102,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        btnServer.setOnClickListener {
+        binding.server.setOnClickListener {
             val layoutInflater = LayoutInflater.from(this)
             val view = layoutInflater.inflate(R.layout.server, null)
             var now = view.findViewById<TextView>(R.id.now)
@@ -131,6 +127,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        binding.sort.text = "조회순"
+        sortStatus = 0
+        viewModel.getBoards()
+        boardList = viewModel.boards.value?.body
+        val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList) { board ->
+            id = board.id
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra("id", id)
+            }
+            startActivity(intent)
+        }
+        binding.recyclerView.adapter = boardRecyclerViewAdapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.sort.text = "조회순"
+        sortStatus = 0
         viewModel.getBoards()
         boardList = viewModel.boards.value?.body
         val boardRecyclerViewAdapter = BoardRecyclerViewAdapter(this, boardList) { board ->

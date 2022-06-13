@@ -76,7 +76,7 @@
             android:layout_marginLeft="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="최신순"
+            android:text="조회순"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

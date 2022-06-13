@@ -18,14 +18,11 @@ class NewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        var btnSave = binding.save
-        var btnList = binding.list
-
-        btnList.setOnClickListener {
+        binding.list.setOnClickListener {
             finish()
         }
 
-        btnSave.setOnClickListener {
+        binding.save.setOnClickListener {
             var title = binding.title.text
             var password = binding.password.text
             var content = binding.content.text

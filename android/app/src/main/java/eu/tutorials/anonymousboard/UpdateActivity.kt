@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import eu.tutorials.anonymousboard.databinding.ActivityUpdateBinding
-import eu.tutorials.anonymousboard.dto.BoardDTO
 
 class UpdateActivity : AppCompatActivity() {
 
     private var contentId: Long? = null
     private var title: String? = null
     private var content: String? = null
-    var board: BoardDTO? = null
 
     private val binding by lazy {
         ActivityUpdateBinding.inflate(layoutInflater)
