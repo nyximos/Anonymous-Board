@@ -39,11 +39,6 @@ public class BoardApiController {
         return responseEntity;
     }
 
-    @GetMapping("/boards/{id}/update")
-    public ResponseEntity<MyResponse> validate(@PathVariable("id") Long id, @RequestParam("password") String password) {
-        ResponseEntity<MyResponse> responseEntity = boardService.validate(id, password);
-        return responseEntity;
-    }
 
     @PostMapping("/boards")
     public ResponseEntity<MyResponse> save(@RequestBody BoardFormDTO boardFormDTO) {

@@ -154,46 +154,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public ResponseEntity<MyResponse> validate(Long id, String password) {
-        Optional<Board> board = boardRepository.findById(id);
-        Board boardEntity = board.orElse(null);
-
-        if(board.isEmpty()) {
-            MyResponse body = MyResponse.builder()
-                    .header(StatusEnum.NOT_FOUND)
-                    .message("해당 게시글이 없습니다.")
-                    .build();
-
-            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
-        }
-
-        if(boardEntity.getPassword().equals(password)) {
-
-            BoardDetailDTO boardDetailDTO = BoardDetailDTO.builder()
-                    .id(boardEntity.getId())
-                    .title(boardEntity.getTitle())
-                    .content(boardEntity.getContent())
-                    .build();
-
-            MyResponse<BoardDetailDTO> body = MyResponse.<BoardDetailDTO>builder()
-                    .header(StatusEnum.OK)
-                    .body(boardDetailDTO)
-                    .message("성공")
-                    .build();
-
-            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
-
-        } else {
-            MyResponse body = MyResponse.builder()
-                    .header(StatusEnum.BAD_REQUEST)
-                    .message("비밀번호가 일치하지 않습니다.")
-                    .build();
-
-            return new ResponseEntity<MyResponse>(body, HttpStatus.OK);
-        }
-    }
-
-    @Override
     public ResponseEntity<MyResponse> update(Long id, BoardUpdateFormDTO boardUpdateFormDTO) {
 
         Optional<Board> board = boardRepository.findById(id);

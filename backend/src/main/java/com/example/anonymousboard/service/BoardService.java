@@ -17,8 +17,6 @@ public interface BoardService {
 
     ResponseEntity<MyResponse> get(Long id);
 
-    ResponseEntity<MyResponse> validate(Long id, String password);
-
     ResponseEntity<MyResponse> update(Long id, BoardUpdateFormDTO boardUpdateFormDTO);
 
     ResponseEntity<MyResponse> remove(Long id, String password);
